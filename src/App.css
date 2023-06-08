@@ -39,7 +39,6 @@ body {
   display: flex;
   justify-content: center;
   margin: 20px;
-  position: relative; /* added to provide relative positioning for children */
 }
 
 .city {
