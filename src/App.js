@@ -1,3 +1,5 @@
+//App.js
+
 import React, { Component } from "react";
 import "./App.css";
 import EventList from "./EventList";
@@ -5,18 +7,22 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
+
 class App extends Component {
   state = {
     events: [],
     locations: [],
+    numberOfEvents: 32,
   };
 
   componentDidMount() {
     this.mounted = true;
+    this.updateEvents();
+
     getEvents().then((events) => {
       if (this.mounted) {
         this.setState({
-          events: events.slice(0, 32),
+          events: events.slice(0, this.state.numberOfEvents),
           locations: extractLocations(events),
         });
       }
@@ -27,16 +33,37 @@ class App extends Component {
     this.mounted = false;
   }
 
-  updateEvents = (location) => {
-    getEvents().then((events) => {
-      const locationEvents =
-        location === "all"
-          ? events
-          : events.filter((event) => event.location === location);
-      this.setState({
-        events: locationEvents,
+  updateNumberOfEvents = (number) => {
+    this.setState({ numberOfEvents: number }, this.updateEvents);
+  };
+
+  updateEvents = (city, eventCount) => {
+    if (city) {
+      getEvents().then((events) => {
+        const locationEvents = events.filter(
+          (event) => event.location === city
+        );
+
+        const count = eventCount || this.state.numberOfEvents;
+
+        if (this.mounted) {
+          this.setState({
+            events: locationEvents.slice(0, count),
+            numberOfEvents: count,
+          });
+        }
       });
-    });
+    } else {
+      getEvents().then((events) => {
+        const count = eventCount || this.state.numberOfEvents;
+        if (this.mounted) {
+          this.setState({
+            events: events.slice(0, count),
+            numberOfEvents: count,
+          });
+        }
+      });
+    }
   };
 
   render() {
@@ -46,8 +73,14 @@ class App extends Component {
           locations={this.state.locations}
           updateEvents={this.updateEvents}
         />
-        <NumberOfEvents />
-        <EventList events={this.state.events} />
+        <div>
+          <EventList events={this.state.events} />
+
+          <NumberOfEvents
+            numberOfEvents={this.state.numberOfEvents}
+            updateNumberOfEvents={this.updateNumberOfEvents}
+          />
+        </div>
       </div>
     );
   }

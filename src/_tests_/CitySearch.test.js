@@ -38,6 +38,7 @@ describe("<CitySearch /> component", () => {
   });
 
   test("render list of suggestions correctly", () => {
+    CitySearchWrapper.find(".city").simulate("focus");
     const locations = extractLocations(mockData);
     CitySearchWrapper.setState({ suggestions: locations });
     const suggestions = CitySearchWrapper.state("suggestions");
@@ -52,6 +53,7 @@ describe("<CitySearch /> component", () => {
   });
 
   test("suggestion list match the query when changed", () => {
+    CitySearchWrapper.find(".city").simulate("focus");
     CitySearchWrapper.setState({ query: "", suggestions: [] });
     CitySearchWrapper.find(".city").simulate("change", {
       target: { value: "Berlin" },
@@ -64,6 +66,7 @@ describe("<CitySearch /> component", () => {
   });
 
   test("selecting a suggestion should change query state", () => {
+    CitySearchWrapper.find(".city").simulate("focus");
     CitySearchWrapper.setState({
       query: "Berlin",
     });

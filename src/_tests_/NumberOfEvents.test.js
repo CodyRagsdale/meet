@@ -7,11 +7,20 @@ import NumberOfEvents from "../NumberOfEvents";
 describe("<NumberOfEvents /> component", () => {
   let NumberOfEventsWrapper;
   beforeAll(() => {
-    NumberOfEventsWrapper = shallow(<NumberOfEvents />);
+    NumberOfEventsWrapper = shallow(
+      <NumberOfEvents updateNumberOfEvents={() => {}} updateEvents={() => {}} />
+    );
   });
 
   test("render number input", () => {
     expect(NumberOfEventsWrapper.find(".number-input")).toHaveLength(1);
+  });
+
+  test("user sees 32 events by default", () => {
+    expect(NumberOfEventsWrapper.find(".number-input").prop("type")).toBe(
+      "number"
+    );
+    expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(32);
   });
 
   test("renders text input correctly", () => {
@@ -22,11 +31,8 @@ describe("<NumberOfEvents /> component", () => {
   });
 
   test("change state when number input changes", () => {
-    NumberOfEventsWrapper.setState({
-      numberOfEvents: "10",
-    });
-    const eventObject = { target: { value: "20" } };
+    const eventObject = { target: { value: 20 } };
     NumberOfEventsWrapper.find(".number-input").simulate("change", eventObject);
-    expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe("20");
+    expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(20);
   });
 });
