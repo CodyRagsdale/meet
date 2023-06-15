@@ -9,8 +9,7 @@
 
 import { mockData } from "./mock-data";
 import NProgress from "nprogress";
-
-const axios = require("axios");
+import axios from "./lib/axios.js";
 
 export const getAccessToken = async () => {
   const accessToken = localStorage.getItem("access_token");

@@ -13,20 +13,12 @@ class App extends Component {
     events: [],
     locations: [],
     numberOfEvents: 32,
+    selectedLocation: "all",
   };
 
   componentDidMount() {
     this.mounted = true;
     this.updateEvents();
-
-    getEvents().then((events) => {
-      if (this.mounted) {
-        this.setState({
-          events: events.slice(0, this.state.numberOfEvents),
-          locations: extractLocations(events),
-        });
-      }
-    });
   }
 
   componentWillUnmount() {
@@ -34,36 +26,30 @@ class App extends Component {
   }
 
   updateNumberOfEvents = (number) => {
-    this.setState({ numberOfEvents: number }, this.updateEvents);
+    this.setState({ numberOfEvents: number });
+    this.updateEvents();
   };
 
-  updateEvents = (city, eventCount) => {
-    if (city) {
-      getEvents().then((events) => {
-        const locationEvents = events.filter(
-          (event) => event.location === city
-        );
+  updateEvents = (
+    location = this.state.selectedLocation,
+    eventCount = this.state.numberOfEvents
+  ) => {
+    getEvents().then((events) => {
+      const locationEvents =
+        location === "all"
+          ? events
+          : events.filter((event) => event.location === location);
+      const eventsToShow = locationEvents.slice(0, eventCount);
 
-        const count = eventCount || this.state.numberOfEvents;
-
-        if (this.mounted) {
-          this.setState({
-            events: locationEvents.slice(0, count),
-            numberOfEvents: count,
-          });
-        }
-      });
-    } else {
-      getEvents().then((events) => {
-        const count = eventCount || this.state.numberOfEvents;
-        if (this.mounted) {
-          this.setState({
-            events: events.slice(0, count),
-            numberOfEvents: count,
-          });
-        }
-      });
-    }
+      if (this.mounted) {
+        this.setState({
+          events: eventsToShow,
+          locations: extractLocations(events),
+          selectedLocation: location,
+          numberOfEvents: eventCount,
+        });
+      }
+    });
   };
 
   render() {

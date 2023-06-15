@@ -5,7 +5,7 @@ import EventList from "../EventList";
 import CitySearch from "../CitySearch";
 import NumberOfEvents from "../NumberOfEvents";
 import { mockData } from "../mock-data";
-import { extractLocations } from "../api";
+import { extractLocations, getEvents } from "../api";
 
 describe("<App /> component", () => {
   let AppWrapper;
@@ -81,14 +81,15 @@ describe("<App /> integration", () => {
     AppWrapper.unmount();
   });
 
-  test("Filtered list of events matches mock data", async () => {
+  test("get list of events matching the number of events selected by the user", async () => {
     const AppWrapper = mount(<App />);
     const NumberOfEventsWrapper = AppWrapper.find(NumberOfEvents);
-    NumberOfEventsWrapper.find(".event-number-input").simulate("change", {
-      target: { value: 20 },
-    });
-    const eventsToShow = mockData.slice(0, 20);
-    expect(AppWrapper.state("events")).toEqual(eventsToShow);
+    const eventNumber = { target: { value: 1 } };
+    await NumberOfEventsWrapper.find(".number-input").simulate(
+      "change",
+      eventNumber
+    );
+    expect(NumberOfEventsWrapper.state("numberOfEvents")).toEqual(1);
     AppWrapper.unmount();
   });
 });
