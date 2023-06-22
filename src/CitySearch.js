@@ -10,10 +10,12 @@ class CitySearch extends Component {
 
   handleInputChanged = (event) => {
     const value = event.target.value;
-    const suggestions = this.props.locations.filter((location) => {
-      return location.toUpperCase().indexOf(value.toUpperCase()) > -1;
-    });
-    this.setState({
+    this.setState({ showSuggestions: true });
+    const suggestions = this.props.locations.filter((location) =>
+      location.toUpperCase().includes(value.toUpperCase())
+    );
+
+    return this.setState({
       query: value,
       suggestions,
     });
@@ -52,7 +54,7 @@ class CitySearch extends Component {
               {suggestion}
             </li>
           ))}
-          <li onClick={() => this.handleItemClicked("all")}>
+          <li className="see-all" onClick={() => this.handleItemClicked("all")}>
             <b>See all cities</b>
           </li>
         </ul>
