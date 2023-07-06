@@ -1,12 +1,12 @@
 {
   "files": {
     "main.css": "/meet/static/css/main.a3dd87a5.chunk.css",
-    "main.js": "/meet/static/js/main.ffb2ef8c.chunk.js",
-    "main.js.map": "/meet/static/js/main.ffb2ef8c.chunk.js.map",
+    "main.js": "/meet/static/js/main.ff6d4b35.chunk.js",
+    "main.js.map": "/meet/static/js/main.ff6d4b35.chunk.js.map",
     "runtime-main.js": "/meet/static/js/runtime-main.9d2ba8f0.js",
     "runtime-main.js.map": "/meet/static/js/runtime-main.9d2ba8f0.js.map",
-    "static/js/2.c816b0b7.chunk.js": "/meet/static/js/2.c816b0b7.chunk.js",
-    "static/js/2.c816b0b7.chunk.js.map": "/meet/static/js/2.c816b0b7.chunk.js.map",
+    "static/js/2.3fdc2efc.chunk.js": "/meet/static/js/2.3fdc2efc.chunk.js",
+    "static/js/2.3fdc2efc.chunk.js.map": "/meet/static/js/2.3fdc2efc.chunk.js.map",
     "static/js/3.09f74fec.chunk.js": "/meet/static/js/3.09f74fec.chunk.js",
     "static/js/3.09f74fec.chunk.js.map": "/meet/static/js/3.09f74fec.chunk.js.map",
     "index.html": "/meet/index.html",
@@ -14,12 +14,12 @@
     "service-worker.js.LICENSE.txt": "/meet/service-worker.js.LICENSE.txt",
     "service-worker.js.map": "/meet/service-worker.js.map",
     "static/css/main.a3dd87a5.chunk.css.map": "/meet/static/css/main.a3dd87a5.chunk.css.map",
-    "static/js/2.c816b0b7.chunk.js.LICENSE.txt": "/meet/static/js/2.c816b0b7.chunk.js.LICENSE.txt"
+    "static/js/2.3fdc2efc.chunk.js.LICENSE.txt": "/meet/static/js/2.3fdc2efc.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.9d2ba8f0.js",
-    "static/js/2.c816b0b7.chunk.js",
+    "static/js/2.3fdc2efc.chunk.js",
     "static/css/main.a3dd87a5.chunk.css",
-    "static/js/main.ffb2ef8c.chunk.js"
+    "static/js/main.ff6d4b35.chunk.js"
   ]
 }
