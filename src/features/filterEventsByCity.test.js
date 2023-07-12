@@ -1,11 +1,10 @@
 import { loadFeature, defineFeature } from "jest-cucumber";
 import React from "react";
-import { mount, shallow } from "enzyme";
+import { mount, shallow, render } from "enzyme";
 import App from "../App";
 import { mockData } from "../mock-data";
 import CitySearch from "../CitySearch";
 import { extractLocations } from "../api";
-import { waitFor } from "@testing-library/react";
 
 const feature = loadFeature("./src/features/filterEventsByCity.feature");
 
@@ -39,7 +38,11 @@ defineFeature(feature, (test) => {
 
     given("the main page is open", () => {
       CitySearchWrapper = shallow(
-        <CitySearch updateEvents={() => {}} locations={locations} />
+        <CitySearch
+          updateEvents={() => {}}
+          updateInfoAlert={() => {}}
+          locations={locations}
+        />
       );
     });
 
@@ -65,27 +68,24 @@ defineFeature(feature, (test) => {
   }) => {
     let AppWrapper;
     given("user was typing “Berlin” in the city textbox", () => {
-      AppWrapper = mount(<App />);
+      AppWrapper = mount(
+        <App events={mockData} locations={extractLocations(mockData)} />
+      );
       AppWrapper.find(".city").simulate("change", {
         target: { value: "Berlin" },
       });
     });
 
     and("the list of suggested cities is showing", () => {
-      console.log(AppWrapper.find(".suggestions").html());
       AppWrapper.update();
-      console.log(AppWrapper.find(".suggestions").html());
       expect(AppWrapper.find(".suggestions li")).toHaveLength(2);
     });
 
     when(
       "the user selects a city (e.g., “Berlin, Germany”) from the list",
       () => {
-        return new Promise((resolve) => {
-          AppWrapper.find(".suggestions li").at(0).simulate("click");
-          AppWrapper.update();
-          resolve();
-        });
+        AppWrapper.find(".suggestions li").at(0).simulate("click");
+        AppWrapper.update();
       }
     );
 

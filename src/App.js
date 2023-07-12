@@ -7,18 +7,24 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
+import { InfoAlert, ErrorAlert } from "./components/Alert";
 
 class App extends Component {
-  state = {
-    events: [],
-    locations: [],
-    numberOfEvents: 32,
-    selectedLocation: "all",
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      events: props.events || [],
+      locations: props.locations || [],
+      numberOfEvents: 32,
+      selectedLocation: "all",
+      infoAlert: "",
+      errorAlert: "",
+    };
+  }
 
   componentDidMount() {
     this.mounted = true;
-    this.updateEvents();
+    if (this.state.events.length === 0) this.updateEvents();
   }
 
   componentWillUnmount() {
@@ -26,8 +32,9 @@ class App extends Component {
   }
 
   updateNumberOfEvents = (number) => {
-    this.setState({ numberOfEvents: number });
-    this.updateEvents();
+    this.setState({ numberOfEvents: number }, () => {
+      this.updateEvents();
+    });
   };
 
   updateEvents = (
@@ -52,19 +59,37 @@ class App extends Component {
     });
   };
 
+  updateInfoAlert = (alertText) => {
+    this.setState({ infoAlert: alertText });
+  };
+
+  updateErrorAlert = (alertText) => {
+    this.setState({ errorAlert: alertText });
+  };
+
   render() {
     return (
       <div className="App">
+        <div className="alerts-container">
+          {this.state.infoAlert.length ? (
+            <InfoAlert text={this.state.infoAlert} />
+          ) : null}
+          {this.state.errorAlert.length ? (
+            <ErrorAlert text={this.state.errorAlert} />
+          ) : null}
+        </div>
         <CitySearch
           locations={this.state.locations}
           updateEvents={this.updateEvents}
+          updateInfoAlert={this.updateInfoAlert}
         />
-        <div>
+        <div className="EventContainer">
           <EventList events={this.state.events} />
 
           <NumberOfEvents
             numberOfEvents={this.state.numberOfEvents}
             updateNumberOfEvents={this.updateNumberOfEvents}
+            updateErrorAlert={this.updateErrorAlert}
           />
         </div>
       </div>

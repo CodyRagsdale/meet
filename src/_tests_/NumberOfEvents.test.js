@@ -8,7 +8,12 @@ describe("<NumberOfEvents /> component", () => {
   let NumberOfEventsWrapper;
   beforeAll(() => {
     NumberOfEventsWrapper = shallow(
-      <NumberOfEvents updateNumberOfEvents={() => {}} updateEvents={() => {}} />
+      <NumberOfEvents
+        numberOfEvents={32}
+        updateErrorAlert={() => {}}
+        updateNumberOfEvents={() => {}}
+        updateEvents={() => {}}
+      />
     );
   });
 
@@ -18,7 +23,7 @@ describe("<NumberOfEvents /> component", () => {
 
   test("user sees 32 events by default", () => {
     expect(NumberOfEventsWrapper.find(".number-input").prop("type")).toBe(
-      "number"
+      "text"
     );
     expect(NumberOfEventsWrapper.state("numberOfEvents")).toBe(32);
   });

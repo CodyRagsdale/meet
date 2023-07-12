@@ -4,6 +4,7 @@ body {
   background-color: #f5f5f5;
   color: #333;
   font-family: Arial, sans-serif;
+  display: flex;
 }
 
 .App {
@@ -12,6 +13,7 @@ body {
   margin: 0 auto;
   box-shadow: 0px 0px 35px 0px rgba(154, 154, 154, 1);
   background-color: white;
+  padding: 20px;
 }
 
 .App-header {
@@ -33,9 +35,16 @@ body {
   color: #61dafb;
 }
 
+.EventContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 /* CitySearch.css */
 
 .CitySearch {
+  position: relative;
   display: flex;
   justify-content: center;
   margin: 20px;
@@ -117,9 +126,21 @@ body {
 /* EventList.css */
 
 .EventList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+/* Alerts */
+.alerts-container {
+  position: fixed;
+  top: 0px;
+  left: 20px;
+  width: 250px;
+  z-index: 1000;
 }
 
 @media screen and (min-width: 600px) {
@@ -135,11 +156,17 @@ body {
 
 @media screen and (min-width: 900px) {
   .App {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
 
   .CitySearch {
     grid-column: span 3;
+  }
+
+  .EventList {
+    grid-column: span 3;
+    justify-content: center;
   }
 }
 

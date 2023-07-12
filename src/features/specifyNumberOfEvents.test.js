@@ -35,7 +35,11 @@ defineFeature(feature, (test) => {
     given("the user wants to specify a number of events to view", () => {
       AppWrapper = mount(<App />);
       NumberOfEventsWrapper = shallow(
-        <NumberOfEvents updateNumberOfEvents={() => {}} />
+        <NumberOfEvents
+          numberOfEvents={32}
+          updateNumberOfEvents={() => {}}
+          updateErrorAlert={() => {}}
+        />
       );
     });
 

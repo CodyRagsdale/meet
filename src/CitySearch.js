@@ -15,6 +15,15 @@ class CitySearch extends Component {
       location.toUpperCase().includes(value.toUpperCase())
     );
 
+    let infoText;
+    if (suggestions.length === 0) {
+      infoText =
+        "We can not find the city you are looking for. Please try another city";
+    } else {
+      infoText = "";
+    }
+    this.props.updateInfoAlert(infoText);
+
     return this.setState({
       query: value,
       suggestions,
@@ -28,6 +37,7 @@ class CitySearch extends Component {
     });
 
     this.props.updateEvents(suggestion);
+    this.props.updateInfoAlert("");
   };
 
   render() {
