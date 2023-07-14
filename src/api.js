@@ -71,6 +71,13 @@ const getToken = async (code) => {
 
 export const getEvents = async () => {
   NProgress.start();
+
+  if (!navigator.onLine) {
+    const events = localStorage.getItem("lastEvents");
+    NProgress.done();
+    return events ? JSON.parse(events) : [];
+  }
+
   if (window.location.href.startsWith("http://localhost")) {
     NProgress.done();
     return mockData;
@@ -86,7 +93,7 @@ export const getEvents = async () => {
     const result = await axios.get(url);
     if (result.data) {
       var locations = extractLocations(result.data.events);
-      localStorage.setItem("lastEvents", JSON.stringify(result.data));
+      localStorage.setItem("lastEvents", JSON.stringify(result.data.events));
       localStorage.setItem("locations", JSON.stringify(locations));
     }
     NProgress.done();
