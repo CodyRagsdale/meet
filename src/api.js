@@ -70,12 +70,19 @@ const getToken = async (code) => {
 };
 
 export const getEvents = async () => {
+  console.log("getEvents called");
   NProgress.start();
 
   if (!navigator.onLine) {
     const events = localStorage.getItem("lastEvents");
+    console.log("Events from localStorage:", events); // logs the raw events string from localStorage
+
+    const parsedEvents = JSON.parse(events);
+    console.log("Parsed events:", parsedEvents); // logs the parsed events object
+
     NProgress.done();
-    return events ? JSON.parse(events) : [];
+    console.log("Parsed events:", parsedEvents); // logs the parsed events object
+    return parsedEvents ? parsedEvents : [];
   }
 
   if (window.location.href.startsWith("http://localhost")) {
@@ -92,6 +99,8 @@ export const getEvents = async () => {
       token;
     const result = await axios.get(url);
     if (result.data) {
+      console.log("Data received from API:", result.data); // logs the data received from API
+
       var locations = extractLocations(result.data.events);
       localStorage.setItem("lastEvents", JSON.stringify(result.data.events));
       localStorage.setItem("locations", JSON.stringify(locations));

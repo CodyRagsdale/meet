@@ -7,7 +7,7 @@ import CitySearch from "./CitySearch";
 import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
-import { InfoAlert, ErrorAlert } from "./components/Alert";
+import { InfoAlert, ErrorAlert, WarningAlert } from "./components/Alert";
 
 class App extends Component {
   constructor(props) {
@@ -19,12 +19,25 @@ class App extends Component {
       selectedLocation: "all",
       infoAlert: "",
       errorAlert: "",
+      warningAlert: "",
     };
   }
 
   componentDidMount() {
     this.mounted = true;
-    if (this.state.events.length === 0) this.updateEvents();
+    if (navigator.onLine) {
+      // Check if the user is online
+      this.updateEvents();
+    } else {
+      // If offline, load events from local storage
+      const events = localStorage.getItem("lastEvents");
+      if (events) {
+        this.setState({
+          events: JSON.parse(events),
+          locations: extractLocations(JSON.parse(events)),
+        });
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -41,22 +54,36 @@ class App extends Component {
     location = this.state.selectedLocation,
     eventCount = this.state.numberOfEvents
   ) => {
-    getEvents().then((events) => {
-      const locationEvents =
-        location === "all"
-          ? events
-          : events.filter((event) => event.location === location);
-      const eventsToShow = locationEvents.slice(0, eventCount);
-
-      if (this.mounted) {
+    if (!navigator.onLine) {
+      const events = localStorage.getItem("lastEvents");
+      if (events) {
         this.setState({
-          events: eventsToShow,
-          locations: extractLocations(events),
-          selectedLocation: location,
-          numberOfEvents: eventCount,
+          events: JSON.parse(events).slice(0, eventCount),
+          locations: extractLocations(JSON.parse(events)),
+          warningAlert:
+            "Warning: You are currently offline. Events are loaded from the cache.",
         });
       }
-    });
+    } else {
+      console.log("updateEvents called");
+      getEvents().then((events) => {
+        const locationEvents =
+          location === "all"
+            ? events
+            : events.filter((event) => event.location === location);
+        const eventsToShow = locationEvents.slice(0, eventCount);
+
+        if (this.mounted) {
+          this.setState({
+            events: eventsToShow,
+            locations: extractLocations(events),
+            selectedLocation: location,
+            numberOfEvents: eventCount,
+            warningAlert: "",
+          });
+        }
+      });
+    }
   };
 
   updateInfoAlert = (alertText) => {
@@ -76,6 +103,9 @@ class App extends Component {
           ) : null}
           {this.state.errorAlert.length ? (
             <ErrorAlert text={this.state.errorAlert} />
+          ) : null}
+          {this.state.warningAlert.length ? (
+            <WarningAlert text={this.state.warningAlert} />
           ) : null}
         </div>
         <CitySearch
