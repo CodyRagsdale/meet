@@ -1,0 +1,23 @@
+.EventList {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* default to 1 column */
+  gap: 25px; /* adjust this for your desired spacing between items */
+  list-style-type: none;
+  padding: 10px;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .EventList {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns for larger screens */
+  }
+}
+
+/* styling for <li>'s that will be used to display the event information */
+.EventList li {
+  padding: 10px 10px 10px 10px;
+  border: 2px solid #000000;
+  box-sizing: border-box;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px #888888;
+}

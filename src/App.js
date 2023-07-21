@@ -1,5 +1,3 @@
-//App.js
-
 import React, { Component } from "react";
 import "./App.css";
 import EventList from "./EventList";
@@ -8,6 +6,8 @@ import NumberOfEvents from "./NumberOfEvents";
 import { getEvents, extractLocations } from "./api";
 import "./nprogress.css";
 import { InfoAlert, ErrorAlert, WarningAlert } from "./components/Alert";
+import CityEventsChart from "./components/CityEventsChart";
+import EventGenresChart from "./components/EventGenresChart";
 
 class App extends Component {
   constructor(props) {
@@ -20,16 +20,16 @@ class App extends Component {
       infoAlert: "",
       errorAlert: "",
       warningAlert: "",
+      isLoaded: false,
     };
   }
 
   componentDidMount() {
     this.mounted = true;
+    setTimeout(() => this.setState({ isLoaded: true }), 200);
     if (navigator.onLine) {
-      // Check if the user is online
       this.updateEvents();
     } else {
-      // If offline, load events from local storage
       const events = localStorage.getItem("lastEvents");
       if (events) {
         this.setState({
@@ -65,7 +65,6 @@ class App extends Component {
         });
       }
     } else {
-      console.log("updateEvents called");
       getEvents().then((events) => {
         const locationEvents =
           location === "all"
@@ -95,8 +94,9 @@ class App extends Component {
   };
 
   render() {
+    const { isLoaded } = this.state;
     return (
-      <div className="App">
+      <div className={`App ${isLoaded ? "loaded" : ""}`}>
         <div className="alerts-container">
           {this.state.infoAlert.length ? (
             <InfoAlert text={this.state.infoAlert} />
@@ -113,14 +113,23 @@ class App extends Component {
           updateEvents={this.updateEvents}
           updateInfoAlert={this.updateInfoAlert}
         />
+        <br></br>
+        <NumberOfEvents
+          numberOfEvents={this.state.numberOfEvents}
+          updateNumberOfEvents={this.updateNumberOfEvents}
+          updateErrorAlert={this.updateErrorAlert}
+        />
+        <br></br>
+        <div className="chart-container">
+          <EventGenresChart events={this.state.events} />
+          <CityEventsChart
+            allLocations={this.state.locations}
+            events={this.state.events}
+          />
+        </div>
+        <br></br>
         <div className="EventContainer">
           <EventList events={this.state.events} />
-
-          <NumberOfEvents
-            numberOfEvents={this.state.numberOfEvents}
-            updateNumberOfEvents={this.updateNumberOfEvents}
-            updateErrorAlert={this.updateErrorAlert}
-          />
         </div>
       </div>
     );

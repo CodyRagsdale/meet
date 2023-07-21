@@ -1,5 +1,3 @@
-// src/NumberOfEvents.js
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
@@ -10,13 +8,14 @@ class NumberOfEvents extends Component {
 
   handleInputChanged = (event) => {
     const value = event.target.value;
-    if (isNaN(value) || value <= 0) {
+    this.setState({ numberOfEvents: value }); // Always update the state
+
+    if (value === "") {
+      this.props.updateErrorAlert("Please enter a number of events");
+    } else if (isNaN(value) || value <= 0) {
       this.props.updateErrorAlert("Please enter a valid number");
     } else {
       this.props.updateNumberOfEvents(value);
-      this.setState({ numberOfEvents: value }, () => {
-        console.log("State updated:", this.state.numberOfEvents);
-      });
       this.props.updateErrorAlert(""); // reset error message if valid number entered
     }
   };
@@ -24,14 +23,16 @@ class NumberOfEvents extends Component {
   render() {
     return (
       <div className="NumberOfEvents">
-        <label>Number of Events: </label>
-        <input
-          id="numberOfEvents"
-          type="text"
-          className="number-input"
-          value={this.state.numberOfEvents}
-          onChange={this.handleInputChanged}
-        />
+        <label>
+          <span className="label-text">Number of Events </span>
+          <input
+            id="numberOfEvents"
+            type="text"
+            className="number-input"
+            value={this.state.numberOfEvents}
+            onChange={this.handleInputChanged}
+          />
+        </label>
       </div>
     );
   }

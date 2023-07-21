@@ -1,0 +1,19 @@
+.NumberOfEvents {
+  width: 200px;
+  margin: 20px auto 50px auto;
+  text-align: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+input[type="text"] {
+  padding: 8px 6px 8px 10px;
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  line-height: 20px;
+  align-self: center;
+  height: 38px;
+}

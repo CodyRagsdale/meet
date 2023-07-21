@@ -1,0 +1,32 @@
+.event {
+  padding: 20px;
+  margin-bottom: 10px;
+  text-align: left;
+  border-radius: 4px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.event-content {
+  flex-grow: 1;
+}
+
+.details-btn {
+  width: 100px;
+  margin: 10px auto 0;
+  padding: 5px 8px;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  background-color: #8f8cf2;
+  color: white;
+  border: none;
+  transition: background-color 0.7s ease; /* Smooth color transition */
+}
+
+.details-btn:hover {
+  background-color: #a653f5; /* Darken the color a bit on hover */
+}

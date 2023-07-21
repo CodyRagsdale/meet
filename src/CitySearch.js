@@ -1,6 +1,6 @@
-// src/CitySearch.js
-
 import React, { Component } from "react";
+import "./CitySearch.css";
+
 class CitySearch extends Component {
   state = {
     query: "",
@@ -43,31 +43,39 @@ class CitySearch extends Component {
   render() {
     return (
       <div className="CitySearch">
-        <input
-          type="text"
-          className="city"
-          value={this.state.query}
-          onChange={this.handleInputChanged}
-          onFocus={() => {
-            this.setState({ showSuggestions: true });
-          }}
-        />
-        <ul
-          className="suggestions"
-          style={this.state.showSuggestions ? {} : { display: "none" }}
-        >
-          {this.state.suggestions.map((suggestion) => (
+        <div className="searchField">
+          <label className="inputField">
+            <span className="label-text">City Search</span>
+            <input
+              type="text"
+              className="city"
+              value={this.state.query}
+              onChange={this.handleInputChanged}
+              onFocus={() => {
+                this.setState({ showSuggestions: true });
+              }}
+            />
+          </label>
+          <ul
+            className="suggestions"
+            style={this.state.showSuggestions ? {} : { display: "none" }}
+          >
+            {this.state.suggestions.map((suggestion) => (
+              <li
+                key={suggestion}
+                onClick={() => this.handleItemClicked(suggestion)}
+              >
+                {suggestion}
+              </li>
+            ))}
             <li
-              key={suggestion}
-              onClick={() => this.handleItemClicked(suggestion)}
+              className="see-all"
+              onClick={() => this.handleItemClicked("all")}
             >
-              {suggestion}
+              <b>See all cities</b>
             </li>
-          ))}
-          <li className="see-all" onClick={() => this.handleItemClicked("all")}>
-            <b>See all cities</b>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </div>
     );
   }
