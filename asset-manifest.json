@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "/meet/static/css/main.854a1cf5.chunk.css",
-    "main.js": "/meet/static/js/main.1a38049b.chunk.js",
-    "main.js.map": "/meet/static/js/main.1a38049b.chunk.js.map",
+    "main.css": "/meet/static/css/main.a8047eb3.chunk.css",
+    "main.js": "/meet/static/js/main.88ed66cc.chunk.js",
+    "main.js.map": "/meet/static/js/main.88ed66cc.chunk.js.map",
     "runtime-main.js": "/meet/static/js/runtime-main.1b2e1729.js",
     "runtime-main.js.map": "/meet/static/js/runtime-main.1b2e1729.js.map",
     "static/js/2.5214fdbf.chunk.js": "/meet/static/js/2.5214fdbf.chunk.js",
@@ -13,13 +13,13 @@
     "service-worker.js": "/meet/service-worker.js",
     "service-worker.js.LICENSE.txt": "/meet/service-worker.js.LICENSE.txt",
     "service-worker.js.map": "/meet/service-worker.js.map",
-    "static/css/main.854a1cf5.chunk.css.map": "/meet/static/css/main.854a1cf5.chunk.css.map",
+    "static/css/main.a8047eb3.chunk.css.map": "/meet/static/css/main.a8047eb3.chunk.css.map",
     "static/js/2.5214fdbf.chunk.js.LICENSE.txt": "/meet/static/js/2.5214fdbf.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.1b2e1729.js",
     "static/js/2.5214fdbf.chunk.js",
-    "static/css/main.854a1cf5.chunk.css",
-    "static/js/main.1a38049b.chunk.js"
+    "static/css/main.a8047eb3.chunk.css",
+    "static/js/main.88ed66cc.chunk.js"
   ]
 }
