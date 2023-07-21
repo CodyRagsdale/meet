@@ -1,4 +1,5 @@
 # Meet App
+https://codyragsdale.github.io/meet/
 
 ## Project Overview
 The Meet App is a progressive web application (PWA) built using React, serverless architecture, and test-driven development (TDD) techniques. It utilizes the Google Calendar API to fetch and display upcoming events in various cities.
